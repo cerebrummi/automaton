@@ -10,6 +10,11 @@ public class En
    {
       e = symbol;
    }
+   
+   public void setSymbol(Symbol symbol)
+   {
+      e = symbol;
+   }
 
    public Symbol getSymbol()
    {
@@ -20,10 +25,5 @@ public class En
    public String toString()
    {
       return "registerE = < " + e + " >";
-   }
-
-   public void setSymbol(Symbol symbol)
-   {
-      e = symbol;
    }
 }
