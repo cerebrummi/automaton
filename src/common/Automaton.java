@@ -30,6 +30,9 @@ public class Automaton
    
    private int startFrozenWindowPSFn;
    private boolean frozenWindowPSFnActive = false;
+   
+   private boolean mobiusFunctionActive = false;
+   private int mobiusFunctionCurrentValue_Mu = 1;
 
    public void init()
    {
@@ -56,6 +59,20 @@ public class Automaton
       frozenWindowPSFnActive = true;
       startFrozenWindowPSFn = start;
    }
+   
+   public void initMobiusFunction()
+   {
+      if(tapePSFnActive == true)
+      {
+         mobiusFunctionActive = true;
+      }
+      else
+      {
+         System.err.println("Mobius Function needs PSFn");
+         System.exit(1);
+      }
+   }
+
 
    public void step()
    {
@@ -114,6 +131,25 @@ public class Automaton
             }
             tapePSFn.filter_F(registerN.getN());
          }
+         
+         if(mobiusFunctionActive)
+         {
+            if(Symbol.S.equals(registerPSFout.getSymbol()))
+            {
+               mobiusFunctionCurrentValue_Mu = 0;
+            }
+            else
+            {
+               if(registerE.getEntity().getOmegaLowerCaseHits() % 2 == 0)
+               {
+                  mobiusFunctionCurrentValue_Mu = 1;
+               }
+               else
+               {
+                  mobiusFunctionCurrentValue_Mu = -1;
+               }
+            }
+         }
       }
    }
 
@@ -121,12 +157,15 @@ public class Automaton
    public String toString()
    {
       return "automaton\n" + registerN.toString() + "\n" + registerE.toString()
-            + "\n" + tapeCPn.toString()//.substring(0, 13)
+            + "\n" + tapeCPn.toString().substring(0, 13)
             + (tapePSFnActive
                   ? "\n" + registerPSFout.toString() + "\n"
-                        + tapePSFn.toString()//.substring(0, 12)
-                  : "");
+                        + tapePSFn.toString().substring(0, 12)
+                  : "")
+            + (mobiusFunctionActive
+                  ? "\nMobius Function = " + String.valueOf(mobiusFunctionCurrentValue_Mu) : "");
    }
 
+   
 
 }

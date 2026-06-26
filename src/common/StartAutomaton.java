@@ -12,8 +12,8 @@ import java.util.StringJoiner;
 public class StartAutomaton
 {
   static final int NUMBER_OF_STEPS = 100;  
-  static final int FROZEN_WINDOW_AFTER_CP = 16; // max
-  static final int FROZEN_WINDOW_AFTER_PSF = 6; // max
+  static final int FROZEN_WINDOW_AFTER_CP = 16; // max 16
+  static final int FROZEN_WINDOW_AFTER_PSF = 6; // max 6
   
    public static void main(String[] args)
    {
@@ -22,6 +22,7 @@ public class StartAutomaton
       automaton.initPSFn();
       automaton.initFrozenWindowCPn(FROZEN_WINDOW_AFTER_CP);
       automaton.initFrozenWindowPSFn(FROZEN_WINDOW_AFTER_PSF);
+      automaton.initMobiusFunction();
       
       StringJoiner joiner = new StringJoiner("\n");
       automaton.init(); // step
