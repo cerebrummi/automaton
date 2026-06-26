@@ -24,7 +24,12 @@ public class Automaton
    private PSFn tapePSFn = new PSFn();
    private PSFnOutput registerPSFout = new PSFnOutput();
    private boolean tapePSFnActive = false;
-   private int lastPrime = 1;
+
+   private int startFrozenWindowCPn;
+   private boolean frozenWindowCPnActive = false;
+   
+   private int startFrozenWindowPSFn;
+   private boolean frozenWindowPSFnActive = false;
 
    public void init()
    {
@@ -40,6 +45,18 @@ public class Automaton
       registerPSFout.setSymbol(Symbol.F);
    }
 
+   public void initFrozenWindowCPn(int start)
+   {
+      frozenWindowCPnActive = true;
+      startFrozenWindowCPn = start;
+   }
+   
+   public void initFrozenWindowPSFn(int start)
+   {
+      frozenWindowPSFnActive = true;
+      startFrozenWindowPSFn = start;
+   }
+
    public void step()
    {
       registerN.plusOne();
@@ -53,13 +70,21 @@ public class Automaton
       {
          registerE.getEntity().setSymbol(Symbol.M);
       }
-      registerE.getEntity().setOmegaLowerCaseHits(tapeCPn.getFirst().getOmegaLowerCaseHits());
+      registerE.getEntity()
+            .setOmegaLowerCaseHits(tapeCPn.getFirst().getOmegaLowerCaseHits());
 
       tapeCPn.shift_S();
 
       if (Symbol.P.equals(registerE.getEntity().getSymbol()))
       {
-         tapeCPn.expansion_X(registerN.getN());
+         if (frozenWindowCPnActive && registerN.getN() > startFrozenWindowCPn)
+         {
+            // no expansion X
+         }
+         else
+         {
+            tapeCPn.expansion_X(registerN.getN());
+         }
          tapeCPn.filter_F(registerN.getN());
       }
 
@@ -79,25 +104,29 @@ public class Automaton
 
          if (Symbol.F.equals(registerPSFout.getSymbol()))
          {
-            tapePSFn.expansion_X(registerN.getN());
-            tapePSFn.filter_F(registerN.getN(), lastPrime);
+            if (frozenWindowPSFnActive && registerN.getN() > startFrozenWindowPSFn)
+            {
+               // no expansion X
+            }
+            else
+            {
+               tapePSFn.expansion_X(registerN.getN());
+            }
+            tapePSFn.filter_F(registerN.getN());
          }
-      }
-
-      if (tapePSFnActive && Symbol.P.equals(registerE.getEntity().getSymbol()))
-      {
-         lastPrime = registerN.getN();
       }
    }
 
    @Override
    public String toString()
-   {      
+   {
       return "automaton\n" + registerN.toString() + "\n" + registerE.toString()
-            + "\n" + tapeCPn.toString().substring(0, 12)
+            + "\n" + tapeCPn.toString()//.substring(0, 13)
             + (tapePSFnActive
                   ? "\n" + registerPSFout.toString() + "\n"
-                        + tapePSFn.toString()
+                        + tapePSFn.toString()//.substring(0, 12)
                   : "");
    }
+
+
 }

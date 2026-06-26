@@ -1,22 +1,61 @@
 package common;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.StringJoiner;
+
 public class StartAutomaton
 {
-  final static int NUMBER_OF_STEPS = 18;
+  static final int NUMBER_OF_STEPS = 100;  
+  static final int FROZEN_WINDOW_AFTER_CP = 16; // max
+  static final int FROZEN_WINDOW_AFTER_PSF = 6; // max
   
    public static void main(String[] args)
    {
       Automaton automaton = new Automaton();
-      automaton.init();
-      // automaton.initPSFn();
-      System.out.println(automaton.toString());
+      
+      automaton.initPSFn();
+      automaton.initFrozenWindowCPn(FROZEN_WINDOW_AFTER_CP);
+      automaton.initFrozenWindowPSFn(FROZEN_WINDOW_AFTER_PSF);
+      
+      StringJoiner joiner = new StringJoiner("\n");
+      automaton.init(); // step
+      joiner.add(automaton.toString());
       
       for( int i = 0 ; i < NUMBER_OF_STEPS - 1; i++)
       {
-         System.out.println("========== step start ==========");
+         joiner.add("========== step start ==========");
          automaton.step();
-         System.out.println(automaton.toString());
-         System.out.println("========== step end ===========");
+         joiner.add(automaton.toString());
+         joiner.add("========== step end ===========");
+      }
+      
+      File file = new File("automaton_expansion.txt");
+      
+      try(FileOutputStream stream = new FileOutputStream(file);
+            OutputStreamWriter writer = new OutputStreamWriter(stream,
+                  StandardCharsets.UTF_8);)
+      {
+         writer.write(joiner.toString());
+         writer.flush();
+         writer.close();
+      }
+      catch (UnsupportedEncodingException e)
+      {
+         e.printStackTrace();
+      }
+      catch (FileNotFoundException e)
+      {
+         e.printStackTrace();
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
       }
    }
 }
