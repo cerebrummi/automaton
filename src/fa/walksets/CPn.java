@@ -8,55 +8,61 @@ import enums.Symbol;
 
 public class CPn
 {
-   private LinkedList<Symbol> list = new LinkedList<>();
-   
-   public void addSymbol(Symbol symbol)
+   private LinkedList<Entity> list = new LinkedList<>();
+
+   public void addFirstSymbol()
    {
-      list.add(symbol);
+      list.add(new Entity(Symbol.L));
    }
-   
-   public Symbol getFirst()
+
+   public Entity getFirst()
    {
       return list.getFirst();
    }
-   
+
    public void shift_S()
    {
-      Symbol element = list.pollFirst();
+      Entity element = list.pollFirst();
       list.add(element);
    }
-   
+
    public void expansion_X(int n)
    {
-      final Symbol[] array = (Symbol[]) Array.newInstance(Symbol.class, list.size());
-      Symbol[] copy =  list.toArray(array);
-      
-      for(int i = 0; i < n - 1; i++)
+      final Entity[] array = (Entity[]) Array.newInstance(Entity.class,
+            list.size());
+      Entity[] copy = list.toArray(array);
+
+      for (int i = 0; i < n - 1; i++)
       {
-         for(Symbol element : copy)
+         for (Entity element : copy)
          {
-            list.add(element);
+            list.add(new Entity(element));
          }
       }
    }
-   
+
    public void filter_F(int n)
    {
       /**
-       * This reference implementation of change uses only counting (jumping), 
+       * This reference implementation of change uses only counting (jumping),
        * no division is necessary.
        */
       final int size = list.size();
-      
-      for(int i = n-1; i < size; i += n )
+
+      for (int i = n - 1; i < size; i += n)
       {
-         if(Symbol.L.equals(list.get(i)))
+         if (Symbol.L.equals(list.get(i).getSymbol()))
          {
-            list.set(i, Symbol.M);
+            list.get(i).setSymbol(Symbol.M);
+         }
+         else
+         {
+            list.get(i).setOmegaLowerCaseHits(
+                  list.get(i).getOmegaLowerCaseHits() + 1);
          }
       }
    }
-   
+
    @Override
    public String toString()
    {

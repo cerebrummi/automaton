@@ -1,29 +1,32 @@
 package fa.walksets;
 
-import enums.Symbol;
-
 public class En
 {
-   private Symbol e;
+   private Entity entity;
    
-   public En (Symbol symbol)
+   public En (Entity entity)
    {
-      e = symbol;
-   }
-   
-   public void setSymbol(Symbol symbol)
-   {
-      e = symbol;
+      this.entity = entity;
    }
 
-   public Symbol getSymbol()
+   public Entity getEntity()
    {
-      return e;
+      return entity;
+   }
+
+   public void setEntity(Entity entity)
+   {
+      this.entity = entity;
    }
 
    @Override
    public String toString()
    {
-      return "registerE = < " + e + " >";
+      return "registerE = < " + entity.getSymbol().name() + " " + entity.getOmegaLowerCaseHits()  + "x >";
+   }
+
+   public void setFirstSymbol()
+   {
+      entity = new Entity();
    }
 }

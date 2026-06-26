@@ -29,8 +29,8 @@ public class Automaton
    public void init()
    {
       registerN.plusOne();
-      registerE.setSymbol(Symbol.ONE);
-      tapeCPn.addSymbol(Symbol.L);
+      registerE.setFirstSymbol();
+      tapeCPn.addFirstSymbol();
    }
 
    public void initPSFn()
@@ -45,18 +45,19 @@ public class Automaton
       registerN.plusOne();
 
       // register update
-      if (Symbol.L.equals(tapeCPn.getFirst()))
+      if (Symbol.L.equals(tapeCPn.getFirst().getSymbol()))
       {
-         registerE.setSymbol(Symbol.P);
+         registerE.getEntity().setSymbol(Symbol.P);
       }
-      else if (Symbol.M.equals(tapeCPn.getFirst()))
+      else if (Symbol.M.equals(tapeCPn.getFirst().getSymbol()))
       {
-         registerE.setSymbol(Symbol.M);
+         registerE.getEntity().setSymbol(Symbol.M);
       }
+      registerE.getEntity().setOmegaLowerCaseHits(tapeCPn.getFirst().getOmegaLowerCaseHits());
 
       tapeCPn.shift_S();
 
-      if (Symbol.P.equals(registerE.getSymbol()))
+      if (Symbol.P.equals(registerE.getEntity().getSymbol()))
       {
          tapeCPn.expansion_X(registerN.getN());
          tapeCPn.filter_F(registerN.getN());
@@ -83,7 +84,7 @@ public class Automaton
          }
       }
 
-      if (tapePSFnActive && Symbol.P.equals(registerE.getSymbol()))
+      if (tapePSFnActive && Symbol.P.equals(registerE.getEntity().getSymbol()))
       {
          lastPrime = registerN.getN();
       }
@@ -91,12 +92,12 @@ public class Automaton
 
    @Override
    public String toString()
-   {
+   {      
       return "automaton\n" + registerN.toString() + "\n" + registerE.toString()
             + "\n" + tapeCPn.toString().substring(0, 12)
             + (tapePSFnActive
                   ? "\n" + registerPSFout.toString() + "\n"
-                        + tapePSFn.toString()//.substring(0, 12)
+                        + tapePSFn.toString()
                   : "");
    }
 }
