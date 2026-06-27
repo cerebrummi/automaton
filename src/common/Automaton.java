@@ -172,9 +172,7 @@ public class Automaton
          if (semiprimeFunctionActive)
          {
             isSemiPrime = SemiPrimeFunction.doSemiPrimeFunction(
-                  registerE.getEntity().isFirstHit(),
-                  registerE.getEntity().getOmegaLowerCaseHits(),
-                  registerPSFout.getSymbol());
+                  registerE.getEntity().calculateOmegaUpperCaseHits(registerN.getN()));
             if(isSemiPrime)
             {
                semiPrimeCounter++;

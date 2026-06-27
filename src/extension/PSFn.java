@@ -53,7 +53,7 @@ public class PSFn
 
       final int size = list.size();
 
-      if (Symbol.C.equals(list.get(firstHit - 1)))
+      if (firstHit < size && Symbol.C.equals(list.get(firstHit - 1))) // stop fistHit when window frozen:  firstHit < size
       {
          list.set(firstHit - 1, Symbol.S);
       }

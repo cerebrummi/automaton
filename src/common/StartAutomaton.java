@@ -11,9 +11,9 @@ import java.util.StringJoiner;
 
 public class StartAutomaton
 {
-  static final int NUMBER_OF_STEPS = 150;  
-  static final int FROZEN_WINDOW_AFTER_CP = 16; // max 16
-  static final int FROZEN_WINDOW_AFTER_PSF = 6; // max 6
+  static final int NUMBER_OF_STEPS = 10000; // tested and confirmed (chatgpt) correct until 10000 (6 to 7 Minutes on workstation)
+  static final int FROZEN_WINDOW_AFTER_CP = 16; // max 16 on workstation
+  static final int FROZEN_WINDOW_AFTER_PSF = 7 ; // max 7 on workstation
   
    public static void main(String[] args)
    {

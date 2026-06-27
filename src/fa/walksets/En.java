@@ -29,8 +29,12 @@ public class En
    @Override
    public String toString()
    {
+      int omegaUpperCaseHits = entity.calculateOmegaUpperCaseHits(registerN.getN());
+      int liouvilleFunction = entity.calculateLiouville(omegaUpperCaseHits);
+      
       return "registerE = < " + entity.getSymbol().name() + " >"
             + "\nomega lowerCase = " + entity.getOmegaLowerCaseHits() //+ "x firstHit = " + entity.isFirstHit()
-            + "\nomega upperCase = " + entity.calculateOmegaUpperCaseHits(registerN.getN());
+            + "\nomega upperCase = " + omegaUpperCaseHits
+            + "\nLiouville Function = " + liouvilleFunction;
    }
 }

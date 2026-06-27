@@ -1,6 +1,5 @@
 package fa.walksets;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import enums.Symbol;
@@ -105,10 +104,21 @@ public class Entity
       }
       return result;
    }
+   
+   public int calculateLiouville(int omegaUpperCaseHits)
+   { 
+      if((omegaUpperCaseHits % 2) == 0)
+      {
+         return 1;
+      }
+      return -1;
+   }
 
    @Override
    public String toString()
    {
       return symbol.name() + " " + omegaLowerCaseHits + "x";
    }
+
+
 }

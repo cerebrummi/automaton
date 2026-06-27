@@ -1,7 +1,5 @@
 package extension;
 
-import enums.Symbol;
-
 public class SemiPrimeFunction
 {
    private SemiPrimeFunction()
@@ -9,18 +7,8 @@ public class SemiPrimeFunction
       // nothing
    }
    
-   public static boolean doSemiPrimeFunction(boolean firstHit, int omegaLowerCaseHits, Symbol symbol)
+   public static boolean doSemiPrimeFunction(int omegaUpperCaseHits)
    {
-      if(firstHit && omegaLowerCaseHits == 1)
-      {
-         return true;
-      }
-
-      if(omegaLowerCaseHits == 2 && Symbol.S.compareTo(symbol) != 0)
-      {
-         return true;
-      }
-      
-      return false;
+      return omegaUpperCaseHits == 2;
    }
 }
