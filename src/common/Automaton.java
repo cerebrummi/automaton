@@ -20,7 +20,7 @@ import fa.walksets.CPn;
 public class Automaton
 {
    private Nn registerN = new Nn(0);
-   private En registerE = new En(null);
+   private En registerE = new En(null, registerN);
    private CPn tapeCPn = new CPn();
 
    private PSFn tapePSFn = new PSFn();
@@ -39,6 +39,10 @@ public class Automaton
    
    private boolean semiprimeFunctionActive = false;
    private boolean isSemiPrime;
+   
+   private int primeCounter = 0;
+   private int semiPrimeCounter = 0;
+   private int primeSquareFreeCounter = 1;
 
    public void init()
    {
@@ -100,6 +104,7 @@ public class Automaton
       if (Symbol.L.equals(tapeCPn.getFirst().getSymbol()))
       {
          registerE.getEntity().setSymbol(Symbol.P);
+         primeCounter++;
       }
       else if (Symbol.M.equals(tapeCPn.getFirst().getSymbol()))
       {
@@ -107,6 +112,8 @@ public class Automaton
       }
       registerE.getEntity()
             .setOmegaLowerCaseHits(tapeCPn.getFirst().getOmegaLowerCaseHits());
+      registerE.getEntity()
+            .setPrimesHit(tapeCPn.getFirst().getPrimesHit());
       registerE.getEntity().setFirstHit(tapeCPn.getFirst().isFirstHit());
 
       tapeCPn.shift_S();
@@ -130,6 +137,7 @@ public class Automaton
          if (Symbol.C.equals(tapePSFn.getFirst()))
          {
             registerPSFout.setSymbol(Symbol.F);
+            primeSquareFreeCounter++;
          }
          else if (Symbol.S.equals(tapePSFn.getFirst()))
          {
@@ -167,6 +175,10 @@ public class Automaton
                   registerE.getEntity().isFirstHit(),
                   registerE.getEntity().getOmegaLowerCaseHits(),
                   registerPSFout.getSymbol());
+            if(isSemiPrime)
+            {
+               semiPrimeCounter++;
+            }
          }
       }
    }
@@ -174,11 +186,14 @@ public class Automaton
    @Override
    public String toString()
    {
-      return "automaton\n" + registerN.toString() + "\n" + registerE.toString()
+      return "automaton\n" + registerN.toString() 
+            + "\n" + registerE.toString()
+            + "\nPrime counter = " + primeCounter 
             + "\n" + tapeCPn.toString().substring(0, 13)
             + (tapePSFnActive
-                  ? "\n" + registerPSFout.toString() + "\n"
-                        + tapePSFn.toString().substring(0, 12)
+                  ? "\n" + registerPSFout.toString() 
+                  + "\nPrimeSquareFree counter = " + primeSquareFreeCounter
+                  + "\n" + tapePSFn.toString().substring(0, 12)
                   : "")
             + (mobiusFunctionActive
                   ? "\nMobius Function = "
@@ -187,8 +202,8 @@ public class Automaton
                         + String.valueOf(mertensFunctionCurrentValue)
                   : "")
             + (semiprimeFunctionActive
-                  ? "\nSemiprime = "
-                        + String.valueOf(isSemiPrime) 
+                  ? "\nSemiprime = " + String.valueOf(isSemiPrime) 
+                  + "\nSemiprime counter = " + semiPrimeCounter
                   : "");
    }
 

@@ -62,6 +62,7 @@ public class CPn
                   list.get(i).getOmegaLowerCaseHits() + 1);
             list.get(i).setFirstHit(false);
          }
+         list.get(i).addPrimesHit(n);
       }
    }
 

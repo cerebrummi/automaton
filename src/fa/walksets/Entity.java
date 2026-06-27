@@ -1,5 +1,8 @@
 package fa.walksets;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import enums.Symbol;
 
 public class Entity
@@ -7,6 +10,7 @@ public class Entity
    private Symbol symbol;
    private int omegaLowerCaseHits;
    private boolean firstHit = true;
+   private LinkedList<Integer> primesHit = new LinkedList<>();
 
    public Entity()
    {
@@ -16,12 +20,14 @@ public class Entity
       this.firstHit = false;
    }
 
+   @SuppressWarnings("unchecked")
    public Entity(Entity element)
    {
       // clone
       this.symbol = element.symbol;
       this.omegaLowerCaseHits = element.omegaLowerCaseHits;
       this.firstHit = false;
+      this.primesHit = (LinkedList<Integer>) element.primesHit.clone();
    }
 
    public Entity(Symbol symbol)
@@ -61,6 +67,43 @@ public class Entity
    public void setFirstHit(boolean firstHit)
    {
       this.firstHit = firstHit;
+   }
+
+   public void addPrimesHit(int prime)
+   {
+      this.primesHit.add(prime);
+   }
+
+   public LinkedList<Integer> getPrimesHit()
+   {
+      return primesHit;
+   }
+
+   public void setPrimesHit(LinkedList<Integer> primesHit)
+   {
+      this.primesHit = primesHit;
+   }
+
+   public int calculateOmegaUpperCaseHits(int n)
+   {
+      if (Symbol.P.equals(symbol))
+      {
+         return 1;
+      }
+
+      int copyN = n;
+      int result = 0;
+
+      for (int i = 0; i < primesHit.size(); i++)
+      {
+         while (n % primesHit.get(i) == 0)
+         {
+            n = n / primesHit.get(i);
+            result++;
+         }
+         n = copyN;
+      }
+      return result;
    }
 
    @Override

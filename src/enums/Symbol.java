@@ -13,20 +13,25 @@ package enums;
 
 public enum Symbol
 {
-   ONE(0), L(1), M(1), P(1), 
-   S(0), C(0), F(0);
+   ONE(0, 0), L(1, 1), M(1, 1), P(1, 1), 
+   S(0, 0), C(0, 0), F(0, 0);
    
    int omegaLowerCaseHitsStart;
+   int omegaUpperCaseHitsStart;
    
-   Symbol(int omegaLowerCaseHitsStart)
+   Symbol(int omegaLowerCaseHitsStart, int omegaUpperCaseHitsStart)
    {
       this.omegaLowerCaseHitsStart = omegaLowerCaseHitsStart;
+      this.omegaUpperCaseHitsStart = omegaUpperCaseHitsStart;
    }
 
    public int getOmegaLowerCaseHitsStart()
    {
       return omegaLowerCaseHitsStart;
    }
-   
-   
+
+   public int getOmegaUpperCaseHitsStart()
+   {
+      return omegaUpperCaseHitsStart;
+   }
 }

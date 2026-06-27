@@ -11,7 +11,7 @@ import java.util.StringJoiner;
 
 public class StartAutomaton
 {
-  static final int NUMBER_OF_STEPS = 100;  
+  static final int NUMBER_OF_STEPS = 150;  
   static final int FROZEN_WINDOW_AFTER_CP = 16; // max 16
   static final int FROZEN_WINDOW_AFTER_PSF = 6; // max 6
   
