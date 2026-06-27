@@ -25,6 +25,11 @@ public class CPn
       list.add(element);
    }
 
+   public void shift_S_star()
+   {
+      list.pollFirst();
+   }
+   
    public void expansion_X(int n)
    {
       final Entity[] array = (Entity[]) Array.newInstance(Entity.class,
@@ -75,4 +80,6 @@ public class CPn
    {
       return "tape_cp_n_start,";
    }
+
+
 }

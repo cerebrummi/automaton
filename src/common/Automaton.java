@@ -116,7 +116,14 @@ public class Automaton
             .setPrimesHit(tapeCPn.getFirst().getPrimesHit());
       registerE.getEntity().setFirstHit(tapeCPn.getFirst().isFirstHit());
 
-      tapeCPn.shift_S();
+      if (frozenWindowCPnActive && registerN.getN() > startFrozenWindowCPn)
+      {
+         tapeCPn.shift_S_star();
+      }
+      else
+      {
+         tapeCPn.shift_S();
+      }
 
       if (Symbol.P.equals(registerE.getEntity().getSymbol()))
       {
