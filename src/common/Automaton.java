@@ -1,8 +1,10 @@
 package common;
 
 import enums.Symbol;
+import extension.MobiusFunction;
 import extension.PSFn;
 import extension.PSFnOutput;
+import extension.SemiPrimeFunction;
 import fa.walksets.En;
 import fa.walksets.Nn;
 import fa.walksets.CPn;
@@ -27,12 +29,16 @@ public class Automaton
 
    private int startFrozenWindowCPn;
    private boolean frozenWindowCPnActive = false;
-   
+
    private int startFrozenWindowPSFn;
    private boolean frozenWindowPSFnActive = false;
-   
+
    private boolean mobiusFunctionActive = false;
    private int mobiusFunctionCurrentValue_Mu = 1;
+   private int mertensFunctionCurrentValue = 1;
+   
+   private boolean semiprimeFunctionActive = false;
+   private boolean isSemiPrime;
 
    public void init()
    {
@@ -53,16 +59,16 @@ public class Automaton
       frozenWindowCPnActive = true;
       startFrozenWindowCPn = start;
    }
-   
+
    public void initFrozenWindowPSFn(int start)
    {
       frozenWindowPSFnActive = true;
       startFrozenWindowPSFn = start;
    }
-   
+
    public void initMobiusFunction()
    {
-      if(tapePSFnActive == true)
+      if (tapePSFnActive == true)
       {
          mobiusFunctionActive = true;
       }
@@ -72,7 +78,19 @@ public class Automaton
          System.exit(1);
       }
    }
-
+   
+   public void initSemiprimeFunction()
+   {
+      if (tapePSFnActive == true)
+      {
+         semiprimeFunctionActive = true;
+      }
+      else
+      {
+         System.err.println("SemiPrime Function needs PSFn");
+         System.exit(1);
+      }
+   }
 
    public void step()
    {
@@ -89,6 +107,7 @@ public class Automaton
       }
       registerE.getEntity()
             .setOmegaLowerCaseHits(tapeCPn.getFirst().getOmegaLowerCaseHits());
+      registerE.getEntity().setFirstHit(tapeCPn.getFirst().isFirstHit());
 
       tapeCPn.shift_S();
 
@@ -121,7 +140,8 @@ public class Automaton
 
          if (Symbol.F.equals(registerPSFout.getSymbol()))
          {
-            if (frozenWindowPSFnActive && registerN.getN() > startFrozenWindowPSFn)
+            if (frozenWindowPSFnActive
+                  && registerN.getN() > startFrozenWindowPSFn)
             {
                // no expansion X
             }
@@ -131,24 +151,22 @@ public class Automaton
             }
             tapePSFn.filter_F(registerN.getN());
          }
-         
-         if(mobiusFunctionActive)
+
+         if (mobiusFunctionActive)
          {
-            if(Symbol.S.equals(registerPSFout.getSymbol()))
-            {
-               mobiusFunctionCurrentValue_Mu = 0;
-            }
-            else
-            {
-               if(registerE.getEntity().getOmegaLowerCaseHits() % 2 == 0)
-               {
-                  mobiusFunctionCurrentValue_Mu = 1;
-               }
-               else
-               {
-                  mobiusFunctionCurrentValue_Mu = -1;
-               }
-            }
+            mobiusFunctionCurrentValue_Mu = MobiusFunction.doMobiusFunction(
+                  registerPSFout.getSymbol(),
+                  registerE.getEntity().getOmegaLowerCaseHits());
+            
+            mertensFunctionCurrentValue += mobiusFunctionCurrentValue_Mu;
+         }
+         
+         if (semiprimeFunctionActive)
+         {
+            isSemiPrime = SemiPrimeFunction.doSemiPrimeFunction(
+                  registerE.getEntity().isFirstHit(),
+                  registerE.getEntity().getOmegaLowerCaseHits(),
+                  registerPSFout.getSymbol());
          }
       }
    }
@@ -163,9 +181,15 @@ public class Automaton
                         + tapePSFn.toString().substring(0, 12)
                   : "")
             + (mobiusFunctionActive
-                  ? "\nMobius Function = " + String.valueOf(mobiusFunctionCurrentValue_Mu) : "");
+                  ? "\nMobius Function = "
+                        + String.valueOf(mobiusFunctionCurrentValue_Mu)
+                        + "\nMertens Function = "
+                        + String.valueOf(mertensFunctionCurrentValue)
+                  : "")
+            + (semiprimeFunctionActive
+                  ? "\nSemiprime = "
+                        + String.valueOf(isSemiPrime) 
+                  : "");
    }
-
-   
 
 }

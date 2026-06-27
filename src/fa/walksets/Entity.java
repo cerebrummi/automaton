@@ -6,12 +6,14 @@ public class Entity
 {
    private Symbol symbol;
    private int omegaLowerCaseHits;
+   private boolean firstHit = true;
 
    public Entity()
    {
       // first register En Symbol when registerEn is ONE
       this.symbol = Symbol.ONE;
       this.omegaLowerCaseHits = Symbol.ONE.getOmegaLowerCaseHitsStart();
+      this.firstHit = false;
    }
 
    public Entity(Entity element)
@@ -19,6 +21,7 @@ public class Entity
       // clone
       this.symbol = element.symbol;
       this.omegaLowerCaseHits = element.omegaLowerCaseHits;
+      this.firstHit = false;
    }
 
    public Entity(Symbol symbol)
@@ -26,6 +29,7 @@ public class Entity
       // first CPn Symbol when registerEn is ONE
       this.symbol = Symbol.L;
       this.omegaLowerCaseHits = Symbol.L.getOmegaLowerCaseHitsStart();
+      this.firstHit = false;
    }
 
    public Symbol getSymbol()
@@ -47,6 +51,16 @@ public class Entity
    public void setOmegaLowerCaseHits(Integer omegaLowerCaseHits)
    {
       this.omegaLowerCaseHits = omegaLowerCaseHits;
+   }
+
+   public boolean isFirstHit()
+   {
+      return firstHit;
+   }
+
+   public void setFirstHit(boolean firstHit)
+   {
+      this.firstHit = firstHit;
    }
 
    @Override

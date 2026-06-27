@@ -23,6 +23,7 @@ public class StartAutomaton
       automaton.initFrozenWindowCPn(FROZEN_WINDOW_AFTER_CP);
       automaton.initFrozenWindowPSFn(FROZEN_WINDOW_AFTER_PSF);
       automaton.initMobiusFunction();
+      automaton.initSemiprimeFunction();
       
       StringJoiner joiner = new StringJoiner("\n");
       automaton.init(); // step

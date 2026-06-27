@@ -31,7 +31,7 @@ public class CPn
       final Entity[] array = (Entity[]) Array.newInstance(Entity.class,
             list.size());
       Entity[] copy = list.toArray(array);
-
+      
       for (int i = 0; i < n - 1; i++)
       {
          for (Entity element : copy)
@@ -54,11 +54,13 @@ public class CPn
          if (Symbol.L.equals(list.get(i).getSymbol()))
          {
             list.get(i).setSymbol(Symbol.M);
+            list.get(i).setFirstHit(true);
          }
          else
          {
             list.get(i).setOmegaLowerCaseHits(
                   list.get(i).getOmegaLowerCaseHits() + 1);
+            list.get(i).setFirstHit(false);
          }
       }
    }
