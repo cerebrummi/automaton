@@ -26,15 +26,20 @@ public class En
       entity = new Entity();
    }
 
+   public String getCsvHeader()
+   {
+      return "register_e_symbol,omega_lower_case,omega_upper_case,liouville_function,";
+   }
+   
    @Override
    public String toString()
    {
       int omegaUpperCaseHits = entity.calculateOmegaUpperCaseHits(registerN.getN());
       int liouvilleFunction = entity.calculateLiouville(omegaUpperCaseHits);
       
-      return "registerE = < " + entity.getSymbol().name() + " >"
-            + "\nomega lowerCase = " + entity.getOmegaLowerCaseHits() //+ "x firstHit = " + entity.isFirstHit()
-            + "\nomega upperCase = " + omegaUpperCaseHits
-            + "\nLiouville Function = " + liouvilleFunction;
+      return entity.getSymbol().name()  + ","
+            + entity.getOmegaLowerCaseHits() + ","
+            + omegaUpperCaseHits + ","
+            + liouvilleFunction;
    }
 }

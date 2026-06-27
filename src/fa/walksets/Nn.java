@@ -17,7 +17,7 @@ public class Nn
    @Override
    public String toString()
    {
-      return "registerN = < " + n + " >";
+      return String.valueOf(n);
    }
 
    public int getN()

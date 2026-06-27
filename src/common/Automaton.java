@@ -180,29 +180,33 @@ public class Automaton
          }
       }
    }
+   
+   public String getCsvHeader()
+   {
+      String header = "n," + registerE.getCsvHeader() + "prime_counter," + tapeCPn.getCsvHeader() 
+            + (tapePSFnActive? "register_psf_out,prime_square_free_counter,tape_psf_n_start,":"")
+            + (mobiusFunctionActive? "mobius_function_mu,mertens_function,":"")
+            + (semiprimeFunctionActive? "semiprime,semiprime_counter":"");
+      
+      return header;
+   }
 
    @Override
    public String toString()
-   {
-      return "automaton\n" + registerN.toString() 
-            + "\n" + registerE.toString()
-            + "\nPrime counter = " + primeCounter 
-            + "\n" + tapeCPn.toString().substring(0, 13)
-            + (tapePSFnActive
-                  ? "\n" + registerPSFout.toString() 
-                  + "\nPrimeSquareFree counter = " + primeSquareFreeCounter
-                  + "\n" + tapePSFn.toString().substring(0, 12)
-                  : "")
-            + (mobiusFunctionActive
-                  ? "\nMobius Function = "
-                        + String.valueOf(mobiusFunctionCurrentValue_Mu)
-                        + "\nMertens Function = "
-                        + String.valueOf(mertensFunctionCurrentValue)
-                  : "")
-            + (semiprimeFunctionActive
-                  ? "\nSemiprime = " + String.valueOf(isSemiPrime) 
-                  + "\nSemiprime counter = " + semiPrimeCounter
-                  : "");
+   {     
+      return registerN.toString()
+            + "," + registerE.toString()
+            + "," + primeCounter
+            + "," + tapeCPn.toString()
+            + (tapePSFnActive?
+                    "," + registerPSFout.toString()
+                  + "," + primeSquareFreeCounter
+                  + "," + tapePSFn.toString():"")
+            + (mobiusFunctionActive? 
+                  "," + String.valueOf(mobiusFunctionCurrentValue_Mu)
+                + "," + String.valueOf(mertensFunctionCurrentValue):"")
+            + (semiprimeFunctionActive?
+                    "," + String.valueOf(isSemiPrime) +"," + semiPrimeCounter:""); 
    }
 
 }

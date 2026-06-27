@@ -11,7 +11,7 @@ import java.util.StringJoiner;
 
 public class StartAutomaton
 {
-  static final int NUMBER_OF_STEPS = 10000; // tested and confirmed (chatgpt) correct until 10000 (6 to 7 Minutes on workstation)
+  static final int NUMBER_OF_STEPS = 10000; // tested and confirmed (chatgpt) correct until 10000
   static final int FROZEN_WINDOW_AFTER_CP = 16; // max 16 on workstation
   static final int FROZEN_WINDOW_AFTER_PSF = 7 ; // max 7 on workstation
   
@@ -26,18 +26,18 @@ public class StartAutomaton
       automaton.initSemiprimeFunction();
       
       StringJoiner joiner = new StringJoiner("\n");
+      joiner.add(automaton.getCsvHeader());
+      
       automaton.init(); // step
       joiner.add(automaton.toString());
       
       for( int i = 0 ; i < NUMBER_OF_STEPS - 1; i++)
       {
-         joiner.add("========== step start ==========");
          automaton.step();
          joiner.add(automaton.toString());
-         joiner.add("========== step end ===========");
       }
       
-      File file = new File("automaton_expansion.txt");
+      File file = new File("automaton_expansion.csv");
       
       try(FileOutputStream stream = new FileOutputStream(file);
             OutputStreamWriter writer = new OutputStreamWriter(stream,

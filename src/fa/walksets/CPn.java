@@ -1,7 +1,6 @@
 package fa.walksets;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import enums.Symbol;
@@ -69,6 +68,11 @@ public class CPn
    @Override
    public String toString()
    {
-      return "CPn = < " + Arrays.toString(list.toArray()) + " >";
+      return list.getFirst().getSymbol().name();
+   }
+
+   public String getCsvHeader()
+   {
+      return "tape_cp_n_start,";
    }
 }

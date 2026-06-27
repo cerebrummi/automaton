@@ -113,12 +113,4 @@ public class Entity
       }
       return -1;
    }
-
-   @Override
-   public String toString()
-   {
-      return symbol.name() + " " + omegaLowerCaseHits + "x";
-   }
-
-
 }

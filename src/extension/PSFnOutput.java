@@ -19,6 +19,6 @@ public class PSFnOutput
    @Override
    public String toString()
    {
-      return "registerPSF = < " + symbol + " >";
+      return symbol.name();
    }
 }

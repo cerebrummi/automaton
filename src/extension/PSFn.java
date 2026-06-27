@@ -1,7 +1,6 @@
 package extension;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import enums.Symbol;
@@ -70,6 +69,6 @@ public class PSFn
    @Override
    public String toString()
    {
-      return "PSFn = < " + Arrays.toString(list.toArray()) + " >";
+      return list.getFirst().name();
    }
 }
