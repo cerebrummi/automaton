@@ -10,6 +10,7 @@ public class Entity
    private int omegaLowerCaseHits;
    private boolean firstHit = true;
    private LinkedList<Integer> primesHit = new LinkedList<>();
+   private boolean isPrimesHitCloned = false;
 
    public Entity()
    {
@@ -19,14 +20,13 @@ public class Entity
       this.firstHit = false;
    }
 
-   @SuppressWarnings("unchecked")
    public Entity(Entity element)
    {
       // clone
       this.symbol = element.symbol;
       this.omegaLowerCaseHits = element.omegaLowerCaseHits;
       this.firstHit = false;
-      this.primesHit = (LinkedList<Integer>) element.primesHit.clone();
+      this.primesHit = element.primesHit;
    }
 
    public Entity(Symbol symbol)
@@ -68,8 +68,15 @@ public class Entity
       this.firstHit = firstHit;
    }
 
+   @SuppressWarnings("unchecked")
    public void addPrimesHit(int prime)
    {
+      if(!isPrimesHitCloned)
+      {
+         this.primesHit = (LinkedList<Integer>) this.primesHit.clone();
+         isPrimesHitCloned = true;
+      }
+      
       this.primesHit.add(prime);
    }
 

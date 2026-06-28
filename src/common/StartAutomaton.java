@@ -11,9 +11,10 @@ import java.util.StringJoiner;
 
 public class StartAutomaton
 {
-  static final int NUMBER_OF_STEPS = 100000;
-  static final int FROZEN_WINDOW_AFTER_CP = 17;
-  static final int FROZEN_WINDOW_AFTER_PSF = 9;
+   // these numbers are save an fast
+  static final int NUMBER_OF_STEPS = 10000;
+  static final int FROZEN_WINDOW_AFTER_CP = 16;
+  static final int FROZEN_WINDOW_AFTER_PSF = 6;
   
    public static void main(String[] args)
    {
