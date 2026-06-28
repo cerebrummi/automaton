@@ -1,5 +1,7 @@
 package fa.walksets;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import enums.Symbol;
@@ -9,7 +11,7 @@ public class Entity
    private Symbol symbol;
    private int omegaLowerCaseHits;
    private boolean firstHit = true;
-   private LinkedList<Integer> primesHit = new LinkedList<>();
+   private HashSet<Integer> primesHit = new HashSet<>();
    private boolean isPrimesHitCloned = false;
 
    public Entity()
@@ -73,19 +75,19 @@ public class Entity
    {
       if(!isPrimesHitCloned)
       {
-         this.primesHit = (LinkedList<Integer>) this.primesHit.clone();
+         this.primesHit = (HashSet<Integer>) this.primesHit.clone();
          isPrimesHitCloned = true;
       }
       
       this.primesHit.add(prime);
    }
 
-   public LinkedList<Integer> getPrimesHit()
+   public HashSet<Integer> getPrimesHit()
    {
       return primesHit;
    }
 
-   public void setPrimesHit(LinkedList<Integer> primesHit)
+   public void setPrimesHit(HashSet<Integer> primesHit)
    {
       this.primesHit = primesHit;
    }
@@ -99,12 +101,16 @@ public class Entity
 
       int copyN = n;
       int result = 0;
+      
+      Integer[] primes = primesHit.toArray(new Integer[0]);
+      
+      Arrays.sort(primes);
 
-      for (int i = 0; i < primesHit.size(); i++)
+      for (int i = 0; i < primes.length; i++)
       {
-         while (n % primesHit.get(i) == 0)
+         while (n % primes[i] == 0)
          {
-            n = n / primesHit.get(i);
+            n = n / primes[i];
             result++;
          }
          n = copyN;
