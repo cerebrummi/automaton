@@ -44,56 +44,48 @@ public class Automaton
    private int semiPrimeCounter = 0;
    private int primeSquareFreeCounter = 1;
 
-   public void init()
+   public void firstInitStep(int startFreezeCPNn, int startFreezePSFn)
    {
       registerN.plusOne();
       registerE.setFirstSymbol();
       tapeCPn.addFirstSymbol();
+      
+      initPSFn();
+      initFrozenWindowCPn(startFreezeCPNn);
+      initFrozenWindowPSFn(startFreezePSFn);
+      initMobiusFunction();
+      initSemiprimeFunction();
+      
+      System.out.println(registerN.getN() + " "+ tapePSFn.toFullString());
    }
 
-   public void initPSFn()
+   private void initPSFn()
    {
       tapePSFnActive = true;
       tapePSFn.addSymbol(Symbol.C);
       registerPSFout.setSymbol(Symbol.F);
    }
 
-   public void initFrozenWindowCPn(int start)
+   private void initFrozenWindowCPn(int start)
    {
       frozenWindowCPnActive = true;
       startFrozenWindowCPn = start;
    }
 
-   public void initFrozenWindowPSFn(int start)
+   private void initFrozenWindowPSFn(int start)
    {
       frozenWindowPSFnActive = true;
       startFrozenWindowPSFn = start;
    }
 
-   public void initMobiusFunction()
+   private void initMobiusFunction()
    {
-      if (tapePSFnActive == true)
-      {
-         mobiusFunctionActive = true;
-      }
-      else
-      {
-         System.err.println("Mobius Function needs PSFn");
-         System.exit(1);
-      }
+      mobiusFunctionActive = true;
    }
    
-   public void initSemiprimeFunction()
+   private void initSemiprimeFunction()
    {
-      if (tapePSFnActive == true)
-      {
-         semiprimeFunctionActive = true;
-      }
-      else
-      {
-         System.err.println("SemiPrime Function needs PSFn");
-         System.exit(1);
-      }
+      semiprimeFunctionActive = true;
    }
 
    public void step()
@@ -151,7 +143,16 @@ public class Automaton
             registerPSFout.setSymbol(Symbol.S);
          }
 
-         tapePSFn.shift_S();
+         if (frozenWindowPSFnActive
+               && registerN.getN() > startFrozenWindowPSFn)
+         {
+            tapePSFn.shift_S_star();
+         }
+         else
+         {
+            tapePSFn.shift_S();
+         }
+         
 
          if (Symbol.F.equals(registerPSFout.getSymbol()))
          {
@@ -166,6 +167,8 @@ public class Automaton
             }
             tapePSFn.filter_F(registerN.getN());
          }
+         
+         System.out.println(registerN.getN() + " "+ tapePSFn.toFullString());
 
          if (mobiusFunctionActive)
          {

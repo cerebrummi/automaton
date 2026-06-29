@@ -1,6 +1,7 @@
 package extension;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import enums.Symbol;
@@ -26,6 +27,11 @@ public class PSFn
    {
       Symbol element = list.pollFirst();
       list.add(element);
+   }
+   
+   public void shift_S_star()
+   {
+      list.pollFirst();
    }
 
    public void expansion_X(int n)
@@ -70,5 +76,10 @@ public class PSFn
    public String toString()
    {
       return list.getFirst().name();
+   }
+   
+   public String toFullString()
+   {
+      return Arrays.deepToString(list.toArray());
    }
 }

@@ -11,8 +11,8 @@ import java.util.StringJoiner;
 
 public class StartAutomaton
 {
-   // these numbers are save an fast
-  static final int NUMBER_OF_STEPS = 10000;
+   // these numbers are save and fast: 10_000, 16, 6
+  static final int NUMBER_OF_STEPS = 5;
   static final int FROZEN_WINDOW_AFTER_CP = 16;
   static final int FROZEN_WINDOW_AFTER_PSF = 6;
   
@@ -20,16 +20,10 @@ public class StartAutomaton
    {
       Automaton automaton = new Automaton();
       
-      automaton.initPSFn();
-      automaton.initFrozenWindowCPn(FROZEN_WINDOW_AFTER_CP);
-      automaton.initFrozenWindowPSFn(FROZEN_WINDOW_AFTER_PSF);
-      automaton.initMobiusFunction();
-      automaton.initSemiprimeFunction();
-      
       StringJoiner joiner = new StringJoiner("\n");
       joiner.add(automaton.getCsvHeader());
       
-      automaton.init(); // step
+      automaton.firstInitStep(FROZEN_WINDOW_AFTER_CP, FROZEN_WINDOW_AFTER_PSF);
       joiner.add(automaton.toString());
       
       for( int i = 0 ; i < NUMBER_OF_STEPS - 1; i++)
